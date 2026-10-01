@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ScanWave" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/sw_blue</item>
+        <item name="colorPrimaryDark">@color/sw_bg</item>
+        <item name="colorAccent">@color/sw_teal</item>
+        <item name="android:windowBackground">@color/sw_bg</item>
+    </style>
+</resources>

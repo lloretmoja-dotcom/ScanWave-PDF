@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sw_blue">#2F8FFF</color>
+    <color name="sw_teal">#1FD1A0</color>
+    <color name="sw_bg">#0B0E14</color>
+    <color name="sw_panel">#12161F</color>
+    <color name="sw_panel2">#171C27</color>
+    <color name="sw_border">#262C3A</color>
+    <color name="sw_text">#EEF1F6</color>
+    <color name="sw_muted">#8B93A7</color>
+    <color name="sw_orange">#FF5E3A</color>
+    <color name="sw_danger">#FF4D5E</color>
+    <color name="sw_white">#FFFFFF</color>
+</resources>
