@@ -124,25 +124,25 @@ class MainActivity : AppCompatActivity() {
                 scannerLauncher.launch(IntentSenderRequest.Builder(intentSender).build())
             }
             .addOnFailureListener {
-                Toast.makeText(this, "No se pudo abrir el escáner. Inténtalo otra vez.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Couldn't open the scanner. Please try again.", Toast.LENGTH_LONG).show()
             }
     }
 
     private fun handleScanResult(scanResult: GmsDocumentScanningResult) {
         val pdf = scanResult.pdf
         if (pdf == null) {
-            Toast.makeText(this, "No se pudo guardar el documento.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Couldn't save the document.", Toast.LENGTH_LONG).show()
             return
         }
         val pageUris = scanResult.pages?.map { it.imageUri } ?: emptyList()
-        Toast.makeText(this, "Guardando documento…", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Saving document…", Toast.LENGTH_SHORT).show()
         recognizeTextForPages(pageUris, 0, StringBuilder()) { ocrText ->
             lifecycleScope.launch(Dispatchers.IO) {
                 val entry = DocumentStore.addDocument(this@MainActivity, pdf.uri, pdf.pageCount, ocrText)
                 runOnUiThread {
                     allDocuments.add(0, entry)
                     refreshList(searchInput.text?.toString() ?: "")
-                    Toast.makeText(this@MainActivity, "Documento guardado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Document saved", Toast.LENGTH_SHORT).show()
                     maybeShowInterstitialAd()
                 }
             }
@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
     private fun shareDocument(entry: DocumentEntry) {
         val file = DocumentStore.fileFor(this, entry)
         if (!file.exists()) {
-            Toast.makeText(this, "No se encuentra el archivo.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "File not found.", Toast.LENGTH_SHORT).show()
             return
         }
         val uri = FileProvider.getUriForFile(this, "com.scanwavepdf.app.fileprovider", file)
@@ -191,16 +191,16 @@ class MainActivity : AppCompatActivity() {
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        startActivity(Intent.createChooser(intent, "Compartir documento"))
+        startActivity(Intent.createChooser(intent, "Share document"))
     }
 
     private fun showRenameDialog(entry: DocumentEntry) {
         val input = EditText(this)
         input.setText(entry.displayName)
         AlertDialog.Builder(this)
-            .setTitle("Cambiar nombre")
+            .setTitle("Rename")
             .setView(input)
-            .setPositiveButton("Guardar") { _, _ ->
+            .setPositiveButton("Save") { _, _ ->
                 val newName = input.text.toString().trim()
                 if (newName.isNotEmpty()) {
                     DocumentStore.renameDocument(this, entry.id, newName)
@@ -208,20 +208,20 @@ class MainActivity : AppCompatActivity() {
                     refreshList(searchInput.text?.toString() ?: "")
                 }
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
     private fun showDeleteDialog(entry: DocumentEntry) {
         AlertDialog.Builder(this)
-            .setTitle("Borrar documento")
-            .setMessage("¿Seguro que quieres borrar \"${entry.displayName}\"? No se puede deshacer.")
-            .setPositiveButton("Borrar") { _, _ ->
+            .setTitle("Delete document")
+            .setMessage("Are you sure you want to delete \"${entry.displayName}\"? This can't be undone.")
+            .setPositiveButton("Delete") { _, _ ->
                 DocumentStore.deleteDocument(this, entry.id)
                 allDocuments.remove(entry)
                 refreshList(searchInput.text?.toString() ?: "")
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 

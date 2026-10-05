@@ -30,7 +30,7 @@ class DocumentsAdapter(
         val entry = items[position]
         holder.name.text = entry.displayName
         val dateLabel = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(entry.createdAt))
-        val pagesLabel = if (entry.pageCount == 1) "1 página" else "${entry.pageCount} páginas"
+        val pagesLabel = if (entry.pageCount == 1) "1 page" else "${entry.pageCount} pages"
         holder.meta.text = "$pagesLabel · $dateLabel"
 
         holder.share.setOnClickListener { onShare(entry) }

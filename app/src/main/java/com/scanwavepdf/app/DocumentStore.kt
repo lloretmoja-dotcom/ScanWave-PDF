@@ -100,7 +100,7 @@ object DocumentStore {
         val entry = DocumentEntry(
             id = id,
             fileName = fileName,
-            displayName = "Documento $dateLabel",
+            displayName = "Document $dateLabel",
             createdAt = System.currentTimeMillis(),
             pageCount = pageCount,
             ocrText = ocrText
