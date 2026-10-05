@@ -36,7 +36,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="10dp"
         android:background="@color/sw_panel2"
-        android:hint="Buscar por nombre o texto…"
+        android:hint="Search by name or text…"
         android:textColorHint="@color/sw_muted"
         android:textColor="@color/sw_text"
         android:padding="12dp"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="Todavía no has escaneado ningún documento.\nToca el botón de abajo para empezar."
+        android:text="You haven't scanned any documents yet.\nTap the button below to get started."
         android:textColor="@color/sw_muted"
         android:visibility="visible" />
 
@@ -70,7 +70,7 @@
         android:textColor="@color/sw_white"
         android:textStyle="bold"
         android:padding="16dp"
-        android:text="+  Escanear documento" />
+        android:text="+  Scan document" />
 
     <FrameLayout
         android:id="@+id/adContainer"
