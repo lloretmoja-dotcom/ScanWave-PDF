@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.scanwavepdf.app'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.scanwavepdf.app"
         minSdk 23
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0.0"
     }
@@ -20,11 +20,26 @@ android {
             // Misma idea que en los demás proyectos: con esta firma fija
             // guardada en el propio proyecto, todas las compilaciones
             // futuras firman igual, y las actualizaciones se instalan
-            // de verdad encima de la versión anterior.
+            // de verdad encima de la versión anterior. Esta firma es
+            // SOLO para probar la app fuera de Play Store (no sirve
+            // para subir a Play Store).
             storeFile file("ci-debug.keystore")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
+        }
+        release {
+            // Firma real para subir a Play Store. Los datos salen de
+            // variables de entorno que pone el flujo de GitHub Actions,
+            // leidas de los "Secrets" del repositorio (nunca quedan
+            // escritas aqui ni en el repositorio publico).
+            def ksFile = System.getenv("RELEASE_KEYSTORE_PATH")
+            if (ksFile != null) {
+                storeFile file(ksFile)
+                storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            }
         }
     }
 
@@ -34,6 +49,9 @@ android {
         }
         release {
             minifyEnabled false
+            if (System.getenv("RELEASE_KEYSTORE_PATH") != null) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
